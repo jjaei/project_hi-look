@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/main.css">
+<title>Hi-look</title>
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span></h1>
+  	</a>
+</div>
+
+<!-- 로그인 하지 않은 상태 -->
+<div th:if="${session.user==null}" class="top_menu">
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+	
+<!-- 로그인 한 상태 -->
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+		<a href="/user/logout">로그아웃</a>|
+		<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기견 조회">유기견 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+</div>
+ <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="/image/dog1.jpg" style="width:100%">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="/image/cat1.jpg" style="width:100%">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="/image/dog2.jpg" style="width:100%">
+      </div>
+
+      <div class="mySlides fade">
+        <img src="/image/cat2.jpg" style="width:100%">
+      </div>
+      <a class="prev" onclick="moveSlides(-1)">&#10094;</a>
+      <a class="next" onclick="moveSlides(1)">&#10095;</a>
+    </div>
+    <br/>
+
+ <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(0)"></span>
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+ </div>
+</body>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:inline="javascript">
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
+    setTimeout(showSlides, 3000); // Change image every 2 seconds
+}
+</script>
