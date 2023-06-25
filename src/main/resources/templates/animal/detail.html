@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Animal List</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/detail.css">
+</head>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+
+<!-- 로그인 하지 않은 상태 -->
+<div th:if="${session.user==null}" class="top_menu">
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+	
+<!-- 로그인 한 상태 -->
+
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+	<a href="/user/logout">로그아웃</a>|
+	<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+  </div>
+<div class="animal-details">
+  <div class="image-container">
+    <img th:src="@{${selectedAnimal.popfile}}" class="animal-image">
+  </div>
+    <table class="table-container">
+      <thead>
+        <tr>
+          <th colspan="2">공고번호 <span th:text="${selectedAnimal.noticeNo}"></span></th>
+        </tr>
+      <thead>
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <span th:text="${selectedAnimal.sexCd == 'F' ? '수컷' : '암컷'}"></span>
+          / <span th:text="${selectedAnimal.neuterYn == 'Y' ? '(중성화O)' : '(중성화X)'}"></span>
+          / <span th:text="${selectedAnimal.age}"></span>
+          / <span th:text="${selectedAnimal.weight}"></span>
+          </td>
+        </tr>
+          <td>특징</td>
+          <td><span th:text="${selectedAnimal.specialMark}"></span></td>
+        </tr>
+		<tr>
+          <td>보호소 이름</td>
+          <td><span th:text="${selectedAnimal.careNm}"></span></td>
+        </tr>
+		<tr>
+          <td>보호소 장소</td>
+          <td><span th:text="${selectedAnimal.careAddr}"></span></td>
+        </tr>
+		<tr>
+          <td>보호소 연락처</td>
+          <td><span th:text="${selectedAnimal.careTel}"></span></td>
+        </tr>                        
+      </tbody>
+    </table>  
+	</div>
+ <div class="button-container">
+		<a th:href="@{/animal/list}" class="back-button">돌아가기</a>
+ </div>
+
+<script th:src="@{/js/jquery.js}"></script>
+<script th:inline="javascript">
+</script>
+
+</html>
