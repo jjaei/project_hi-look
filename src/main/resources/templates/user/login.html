@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+<div class=top_menu>
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+  </div>
+<form id=login_form method="post">
+<div class="box">
+  <input class="id_input" type="text" name="user_id" placeholder="ID">
+  <input class="pw_input" type="password" name="user_pw" placeholder="Password">
+  	<div th:if="${result == 0}" class="login_warn">ID 또는 비밀번호가 일치하지 않습니다.</div>
+  <button class="login_btn" type="submit">로그인</button>
+</div>
+</form>
+</body>
+<script th:src="@{/js/jquery.js}"></script>
+<script>
+
+	$(".login_btn").click(function(){
+		$("#login_form").attr("action", "/user/login");
+		$("#login_form").submit();
+	});
+	
+</script>
+</html>
