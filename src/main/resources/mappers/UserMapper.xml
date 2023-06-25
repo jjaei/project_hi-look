@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 연결할 인터페이스 경로를 namespace에 작성 -->
+<mapper namespace="com.hilook.mappers.UserMapper">
+<insert id="createUser">
+	INSERT INTO user(user_id, user_pw, user_name, user_email)
+	VALUES (#{user_id}, #{user_pw}, #{user_name}, #{user_email})
+</insert>
+
+<!-- 아이디 중복 검사 -->
+<select id="checkId" resultType="int">
+	SELECT COUNT(*) FROM user WHERE user_id = #{user_id}
+</select>
+
+<!-- 로그인 -->
+<select id="userLogin" resultType="userVO">
+	SELECT user_id, user_pw, user_name, user_email
+	FROM user 
+	WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+</select>
+
+<delete id="deleteUser">
+	DELETE FROM user WHERE user_id = #{user_id} AND user_pw=#{user_pw}
+</delete>
+</mapper>
