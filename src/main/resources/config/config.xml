@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="animalVO" type="com.hilook.beans.vo.AnimalVO"></typeAlias>
+		<typeAlias alias="userVO" type="com.hilook.beans.vo.UserVO"></typeAlias>
+		<typeAlias alias="boardVO" type="com.hilook.beans.vo.BoardVO"></typeAlias>
+		<typeAlias alias="replyVO" type="com.hilook.beans.vo.ReplyVO"></typeAlias>
+	</typeAliases>
+</configuration>
