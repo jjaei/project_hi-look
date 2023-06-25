@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Animals List</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/list.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+
+<!-- 로그인 하지 않은 상태 -->
+<div th:if="${session.user==null}" class="top_menu">
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+	
+<!-- 로그인 한 상태 -->
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+		<a href="/user/logout">로그아웃</a>|
+		<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+<div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+		<li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+</div>
+  
+<div class="txt">
+  <p class="text-center animalLen">
+    <span th:utext="${#lists.size(items.?[processState eq '보호중'])}"></span>마리의 친구들이
+    <span th:if="${session.user != null}">
+      <span th:text="${session.user.user_id} + '님'"></span>
+    </span>
+    <span th:unless="${session.user != null}">당신</span>
+    을 기다리고 있습니다.
+  </p>
+</div>
+    <div class="search-form">
+        <form method="GET" action="/animal/list">
+            <label for="sido_select" style="font-weight: bold;">시도</label>
+            <select id="sido_select" name="upr_cd">
+                <option value="" selected>전체</option>
+                <option value="6110000">서울특별시</option>
+                <option value="6260000">부산광역시</option>
+                <option value="6270000">대구광역시</option>
+                <option value="6280000">인천광역시</option>
+                <option value="6290000">광주광역시</option>
+                <option value="5690000">세종특별자치시</option>
+                <option value="6300000">대전광역시</option>
+                <option value="6310000">울산광역시</option>
+                <option value="6410000">경기도</option>
+                <option value="6530000">강원특별자치도</option>
+                <option value="6430000">충청북도</option>
+                <option value="6440000">충청남도</option>
+                <option value="6450000">전라북도</option>
+                <option value="6460000">전라남도</option>
+                <option value="6470000">경상북도</option>
+                <option value="6480000">경상남도</option>
+                <option value="6500000">제주특별자치도</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="upkind_select" style="font-weight: bold;">품종</label>
+            <select id="upkind" name="upkind">
+                <option value="" selected>전체</option>
+                <option value="417000">강아지</option>
+                <option value="422400">고양이</option>
+                <option value="429900">기타</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit">검색</button>
+        </form>
+    </div>
+<div class="d-flex justify-content-center">
+    <div class="card-container">
+  	<div class="row">
+    <div class="col-md-3 mb-4" th:each="animalVO : ${items}">
+       <div class="card" >
+          <a th:href="@{/animal/detail(desertionNo=${animalVO.desertionNo})}" class="card-link stretched-link"></a>
+          <div class="card-body d-flex align-items-center">
+            <div class="desrtionNo"> 
+              고유번호 <span th:text="${animalVO.desertionNo}"></span>
+            </div>
+            <div class="card-img">
+              <img th:src="@{${animalVO.filename}}">
+            </div>
+            <div class="animal-info">
+            	<div class="top_info"></div>
+	              <span class ="info_state" th:text="${animalVO.processState}"></span> 
+	              <span class="info_sexCd" th:text="${animalVO.sexCd == 'F' ? '암컷' : '수컷'}"></span>
+           	   </div>
+              <p>공고기간 <span class="date" th:text="${#strings.substring(animalVO.noticeSdt, 2, 4)} + '.' + ${#strings.substring(animalVO.noticeSdt, 4, 6)} + '.' + ${#strings.substring(animalVO.noticeSdt, 6)}"></span>
+~ <span th:text="${#strings.substring(animalVO.noticeEdt, 2, 4)} + '.' + ${#strings.substring(animalVO.noticeEdt, 4, 6)} + '.' + ${#strings.substring(animalVO.noticeEdt, 6)}"></span></p>
+              <p>품종 <span th:text="${animalVO.kindCd}"></span></p>
+              <p>발견장소 <span th:text="${animalVO.happenPlace}"></span></p>
+            </div>
+          </div>
+		</div>
+      </div>
+    </div>
+  </div>
+</body> 
+<script>
+
+</script> 
+</html>
