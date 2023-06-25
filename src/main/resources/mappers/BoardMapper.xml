@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 연결할 인터페이스 경로를 namespace에 작성 -->
+<mapper namespace="com.hilook.mappers.BoardMapper">
+
+<sql id="criteria"></sql>
+
+<!--게시글 등록 -->
+<insert id="write" parameterType="BoardVO">
+	INSERT INTO board(title, writer, content, filename, filepath) 
+	VALUES ( #{board.title}, #{board.writer}, #{board.content}, #{board.filename}, #{board.filepath} )
+</insert>
+
+<!-- 게시글 목록 -->
+<select id="getList" resultType="BoardVO">
+	SELECT * FROM board ORDER BY bno DESC
+</select>
+
+<!-- 게시글 조회 -->
+<select id="getPage" resultType="BoardVO">
+	SELECT * FROM board WHERE bno = #{bno} 
+</select>
+
+<!-- 게시글 수정 -->
+<update id="modify" parameterType="BoardVO">
+	UPDATE board SET
+	title=#{board.title}, content=#{board.content}, writer=#{board.writer}, filename=#{board.filename}, filepath=#{board.filepath}, updateDate=SYSDATE() 
+	WHERE bno=#{board.bno}
+</update>
+
+<!-- 게시글 삭제 -->
+<delete id="delete">
+	DELETE FROM board where bno=#{bno}
+</delete>
+
+<select id="getTotal" resultType="_int">
+	<!-- <![CDATA[ SELECT COUNT(*) FROM TBL_BOARD WHERE BNO > 0 ]]> -->
+	SELECT COUNT(*) FROM board WHERE
+		
+	<![CDATA[
+	BNO > 0
+	]]>
+	<include refid="criteria"></include>
+</select>
+<select id="getListWithPaging" resultType="BoardVO">
+	<![CDATA[ 
+	SELECT * FROM board a 
+	WHERE BNO > 0
+	]]>
+	<include refid="criteria"></include>
+	<![CDATA[
+	ORDER BY BNO DESC
+	LIMIT #{limit} OFFSET #{offset}
+	]]>
+</select>
+<!-- 조회수 -->
+<update id="cnt">
+	UPDATE BOARD SET cnt = 1 + cnt
+	where bno = #{bno}
+</update>
+</mapper>
