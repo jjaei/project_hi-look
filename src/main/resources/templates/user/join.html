@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Join</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/join.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+<div class=top_menu>
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+  </div>
+<div class="wrapper">
+<form action="/user/join" method="post">
+	<div class="box">
+		<input class="id" type="text" name="user_id" placeholder="ID">
+			<span class="check_id_ok">사용 가능한 아이디입니다.</span>
+			<span class="check_id_no">아이디가 이미 존재합니다.</span>
+			<span class="final_id_ck">아이디를 입력해주세요.</span>
+		<input class="pw" type="password" name="user_pw" placeholder="Password">
+			<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
+		<input class="name" type="text" name="user_name" placeholder="Name">
+			<span class="final_name_ck">이름 형식이 올바르지 않습니다.</span>
+		<input class="email" type="email" name="user_email" placeholder="Email">
+			<span class="final_email_ck">이메일 주소가 올바르지 않습니다.</span>
+  		<button class="button" type="submit">회원가입</button>
+	</div>
+</form>
+</div>
+</body>
+<script th:src="@{/js/jquery.js}"></script>
+<script>
+
+var idCheck = false; // 아이디
+var idckCheck = false; // 아이디 중복 검사
+var pwCheck = false; // 비밀번호
+var nameCheck = false; // 이름
+var emailCheck = false; // 이메일
+
+
+	$('.id').on("propertychange change keyup paste input", function(){
+		// console.log("keyup 테스트");
+		var user_id = $('.id').val();
+		var data = {user_id : user_id}
+		
+		$.ajax({
+			type: "post",
+			url: "/user/userIdCheck",
+			data: data,
+			success: function(result){
+			//	console.log("성공 여부 : " + result);
+			if(result != 'fail'){
+				$('.check_id_ok').css("display","inline-block");
+				$('.check_id_no').css("display","none");
+				idckCheck = true;
+			} else {
+				$('.check_id_no').css("display","inline-block");
+				$('.check_id_ok').css("display","none");
+				idckCheck = false;
+			}
+			}
+		})
+	});
+
+	
+	$(document).ready(function(){
+		$(".button").click(function(){
+			
+			var id = $('.id').val();  // id 입력칸
+			var pw = $('.pw').val();
+			var name = $('.name').val();
+			var email = $('.email').val();
+			
+			// 아이디 유효성 검사
+			if(id == ""){
+				$('.final_id_ck').css('display','block');
+				idCheck=false;
+			}else {
+				$('.final_id_ck').css('display','none');
+				idCheck=true;
+			}
+			
+			// 비밀번호 유효성 검사
+			if(pw==""){
+				$('.final_pw_ck').css('display','block');
+				pwCheck=false;
+			}else {
+				$('.final_pw_ck').css('display','none');
+				pwCheck=true;
+			}
+			
+			// 이름 유효성 검사(정규식)
+			var reg_name = /^[가-힣]{2,15}$/;
+			
+			if(name==""){
+				$('.final_name_ck').css('display','block');
+				nameCheck=false;
+			} else if(!reg_name.test(name)){
+				$('.final_name_ck').css('display','block');
+				nameCheck=false;
+			} else {
+				$('.final_name_ck').css('display','none');
+				nameCheck=true;
+			}
+			
+			// 이메일 유효성 검사(정규식)
+			var reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i; 
+			
+			if(email==""){
+				$('.final_email_ck').css('display','block');
+				emailCheck=false;
+			}else if(!reg_email.test(email)){
+				$('.final_email_ck').css('display','block');
+				emailCheck=false;
+			} else {
+				$('.final_email_ck').css('display','none');
+				emailCheck=true;
+			}
+			
+			// 모든 항목 유효성 검사
+			if(idCheck && pwCheck && nameCheck && emailCheck){
+				$("form[action='/user/join']").attr("action", "/user/join");
+				$("form[action='/user/join']").submit();
+				alert("회원가입이 완료되었습니다.");
+			}
+			return false;
+		});
+	});
+	
+	
+</script>
+</html>
