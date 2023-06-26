@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 연결할 인터페이스 경로를 namespace에 작성 -->
+<mapper namespace="com.hilook.mappers.ReplyMapper">
+<insert id="enrollReply">
+	INSERT INTO REPLY(BNO, REPLY, REPLIER)
+	VALUES (#{bno}, #{reply}, #{replier})
+</insert>
+
+<select id="read" resultType="ReplyVO">
+	SELECT RNO, BNO, REPLY, REPLIER, REPLYDATE, UPDATEDATE
+	FROM REPLY
+	WHERE RNO = #{rno}
+</select>
+
+<delete id="delete">
+	DELETE FROM REPLY WHERE RNO=#{rno}
+</delete>
+
+<update id="update">
+	UPDATE REPLY
+	SET REPLY=#{reply}, REPLIER=#{replier}, UPDATEDATE=SYSDATE()
+	WHERE RNO=#{rno}
+</update>
+
+<select id="getListWithPaging" resultType="replyVO">
+	SELECT RNO, BNO, REPLY, REPLIER, REPLYDATE, UPDATEDATE
+	FROM REPLY
+	WHERE BNO = #{bno}
+	ORDER BY RNO DESC
+	LIMIT #{cri.limit} OFFSET #{cri.offset}
+</select>
+</mapper>
