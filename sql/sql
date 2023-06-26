@@ -1,0 +1,72 @@
+CREATE TABLE USER
+(
+	user_id varchar(15) PRIMARY KEY,
+	user_pw varchar(20) NOT NULL,
+	user_name varchar(5) NOT NULL,
+	user_email varchar(50) NOT NULL
+);
+
+ALTER TABLE USER ADD CONSTRAINT pk_user_id PRIMARY KEY(user_id);
+
+CREATE TABLE BOARD
+(
+	BNO INT(10) auto_increment PRIMARY KEY,
+	TITLE VARCHAR(150) NOT NULL,
+	CONTENT VARCHAR(2000) NOT NULL,
+	WRITER VARCHAR(15) NOT NULL,
+	CNT int(10),
+	REGDATE DATE DEFAULT SYSDATE(),
+	UPDATEDATE DATE DEFAULT SYSDATE()
+);
+
+ALTER TABLE board ADD COLUMN filename VARCHAR(255);
+ALTER TABLE board ADD COLUMN filepath VARCHAR(255);
+ALTER TABLE board ADD COLUMN updatecnt int(10);
+
+CREATE TABLE REPLY
+(
+   rno INT(10) AUTO_INCREMENT PRIMARY KEY,
+   bno int(10) NOT NULL,
+   replier varchar(15) NOT NULL,
+   reply VARCHAR(2000),
+   replydate date DEFAULT sysdate(),
+   updatedate date DEFAULT sysdate()   
+);
+
+CREATE TABLE animal 
+(
+	desertionNo INT(20) PRIMARY KEY,
+	filename varchar(50),
+	happenDt varchar(20),
+	happenPlace varchar(100),
+	kindCd varchar(10),
+	colorCd varchar(10),
+	age varchar(10),
+	weight varchar(5),
+	noticeNo varchar(10),
+	noticeEdt varchar(10),
+	popfile varchar(50),
+	processState varchar(10),
+	sexCd varchar(5),
+	neuterYn varchar(5),
+	specialMark varchar(100),
+	careNm varchar(20),
+	careTel varchar(20),
+	careAddr varchar(50)
+);
+
+CREATE TABLE shelter
+(
+	careNm varchar(20),
+	careAddr varchar(50),
+	careTel varchar(20),
+	saveTrgtAnimal varchar(20)
+);
+
+SELECT * FROM reply;
+SELECT * FROM USER;
+DELETE FROM USER WHERE user_id='';
+SELECT * FROM board;
+DROP TABLE board;
+DELETE FROM board;
+UPDATE board SET cnt = 1+cnt WHERE bno=5;
