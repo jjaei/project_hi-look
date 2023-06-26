@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Withdraw</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/withdraw.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+
+	<!-- 로그인 하지 않은 상태 -->
+	<div th:if="${session.user==null}" class="top_menu">
+		<a href="/user/login">로그인</a>| 
+		<a href="/user/join">회원가입</a>
+	</div>
+	
+	<!-- 로그인 한 상태 -->
+
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+		<a href="/user/logout">로그아웃</a>|
+		<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+  </div>
+  
+<form id=withdraw_form method="post" autocomplete="off">
+<div class="box">
+  <input class="id_input" type="text" th:value="${session.user.user_id}" placeholder="ID" readonly>
+  <input class="pw_input" type="password" name="user_pw" placeholder="Password">
+  <button class="withdraw_btn" type="submit">회원탈퇴</button>
+</div>
+</form>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script th:inline="javascript">
+
+	var result = /*[[${result}]]*/ '';
+	
+	if(result === "fail"){
+		alert("비밀번호를 다시 확인해주세요.");
+	}
+	
+	if(result === "success"){
+		alert("회원 탈퇴가 완료되었습니다.");
+	}
+	
+</script>
+</html>
