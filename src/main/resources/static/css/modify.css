@@ -1,0 +1,224 @@
+/* 상단 부분*/
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+  	position: relative;
+  	padding: 0;
+  	margin: 0;
+  	font-family: "Raleway", sans-serif;
+  	font-weight: 600;
+  	font-size: 60px;
+  	color: #080808;
+  	-webkit-transition: all 0.4s ease 0s;
+  	-o-transition: all 0.4s ease 0s;
+  	transition: all 0.4s ease 0s;
+  	margin-top: 20px;
+  	margin-left: 20px;
+}
+
+h1 span {
+  	display: block;
+  	font-size: 0.5em;
+  	line-height: 1.3;
+}
+
+h1 em {
+  	font-style: normal;
+  	font-weight: 600;
+}
+
+.logo h1 {
+  	text-transform: capitalize;
+}
+
+.logo h1:before {
+  	position: absolute;
+  	left: 0;
+  	bottom: 0;
+  	width: 60px;
+  	height: 2px;
+  	content: "";
+  	background-color: #c4dfff;
+}
+
+.logo h1 span {
+  	font-size: 13px;
+  	font-weight: 500;
+  	text-transform: uppercase;
+  	letter-spacing: 4px;
+  	line-height: 3em;
+  	padding-left: 0.25em;
+  	color: rgba(0, 0, 0, 0.4);
+  	padding-bottom: 10px;
+}
+
+.logo a, .logo a span, .logo h1,
+.logo {
+	text-decoration-line: none;
+	text-decoration: none;
+}
+
+/* 로그인, 회원가입 */
+.top_menu {
+	position: absolute;
+	top: 30px;
+	right: 10px;
+	color: #686868;
+	margin-top: 20px;
+	font-family: 'SUITE-Regular';
+}
+
+.top_menu a {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #8C8C8C;
+	font-size: 24px;
+}
+
+.top_menu a:last-child {
+	margin-right: 20px;
+}
+
+/*카테고리 영역*/
+h3 {
+  	color: #fff;
+  	font-weight: bold;
+  	margin: 0 0 20px 0;
+  	position: relative;
+  	padding: 0 0 5px 0;
+  	margin-left: 10px;
+}
+
+.back {
+  	padding: 20px 0 150px 0;
+}
+
+.color-7 {
+  	margin-top: 20px;
+  	background: #c4dfff;
+  	height: 100px;
+}
+
+  body {
+	font-family: 'SUITE-Regular';	
+}
+
+.menu a {
+  	color: rgba(255, 255, 255, 0.8);
+  	font-family: Lato;
+  	font-size: 17pt;
+  	font-weight: 600;
+  	padding: 15px 25px;
+  	position: relative;
+  	display: inline-block;
+  	text-decoration: none;
+  	text-transform: uppercase;
+}
+
+.menu {
+  	text-align: center;
+  	display: flex;
+  	justify-content: center;
+  	list-style-type: none;
+  	padding: 0;
+}
+
+.menu li {
+  	margin-right: 50px; 
+}
+
+/* 로그인 성공 영역 */
+.login_success {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	color: #686868;
+    font-family: 'SUITE-Regular';
+   	position: absolute;
+	top: 30px;
+	right: 10px;
+	color: #686868;
+	text-align: center;
+}
+
+.login_success a {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #8C8C8C;
+	font-size: 24px;
+    font-family: 'SUITE-Regular';
+}
+
+.login_success a:last-child {
+	margin-right: 20px;
+}
+
+.bold {
+  	font-weight: bold;
+}
+
+
+label {
+  	display: block;
+  	margin: 10px 0;
+}
+
+.btn_wrap {
+  	display: flex;
+  	justify-content: center;
+  	margin-top: 10px;
+}
+
+.btn {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	font-size: 16px;
+  	background-color: #fff;
+  	border: 1px solid #ddd;
+  	font-weight: 600;
+  	width: 120px;
+  	height: 41px;
+  	line-height: 41px;
+  	text-align: center;
+  	margin-left: 10px; 
+  	margin-right: 10px;
+  	cursor: pointer;
+  	color: black;
+  	padding: 5px 15px;
+  	text-decoration: none;
+  	border-radius: 4px;
+  	margin-top: 5px;
+}
+
+.btn:hover {
+  	background-color: #f6f6f6;
+}
+
+.form-container {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	height: 100%;
+}
+
+.form-control {
+	width: 700px;
+    resize: none;
+    margin-bottom: 20px; 
+}
+
+textarea[name="content"] {
+    height: 500px; 
+}
+
+.field {
+	width: 700px;
+}
