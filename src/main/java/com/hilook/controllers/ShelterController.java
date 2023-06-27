@@ -23,7 +23,7 @@ import com.hilook.beans.vo.ShelterVO;
 @Controller
 @RequestMapping("/shelter/*")
 public class ShelterController {
- 
+		
     	@GetMapping("/list")
     	public ModelAndView list(Model model,
 			@RequestParam(value = "care_nm", defaultValue = "") String care_nm,
