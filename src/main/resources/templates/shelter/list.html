@@ -44,7 +44,7 @@
 </div>
 
 <form method="GET" action="/shelter/list" class="form">
-    <input class="keyword" name="care_nm" type="text" placeholder="보호소 이름을 입력하세요." style="text-align:center; width: 400px;">
+    <input id="keyword" class="keyword" name="care_nm" type="text" placeholder="보호소 이름을 입력하세요." style="text-align:center; width: 400px;">
     &nbsp;&nbsp;&nbsp;&nbsp;
     <button type="submit" class="key_btn">검색</button>
 </form>
@@ -60,7 +60,7 @@
     </thead>
     <tbody>
 		<tr th:each="shelterVO : ${items}" th:if="${shelterVO != null}">
-			<td><a id="map" th:text="${shelterVO.careNm}"></a></td>
+			<td class="text-center" th:text="${shelterVO.careNm}"></td>
     		<td class="text-center" th:text="${shelterVO.careAddr}"></td>
     		<td class="text-center" th:text="${shelterVO.careTel}"></td>
     		<td class="text-center" th:text="${shelterVO.saveTrgtAnimal}"></td>
@@ -69,6 +69,4 @@
 </table>
 </body>
 <script th:src="@{/js/jquery.js}"></script>
-<script>
-</script>
 </html>
