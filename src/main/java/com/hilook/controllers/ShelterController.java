@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hilook.beans.vo.ShelterVO;
@@ -24,7 +25,9 @@ import com.hilook.beans.vo.ShelterVO;
 public class ShelterController {
  
     	@GetMapping("/list")
-    	public ModelAndView list(Model model) throws IOException {
+    	public ModelAndView list(Model model,
+			@RequestParam(value = "care_nm", defaultValue = "") String care_nm,
+			@RequestParam(defaultValue = "1") int pageNum) throws IOException {	
     		
 		int pageNo = 1;
         int numOfRows = 1000;
@@ -32,7 +35,7 @@ public class ShelterController {
     	StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=TqJb2EMvQ4ga3%2Flmz63uvvv3TTJmkEO9qKkfhmngKmCwQcuWYSb%2FkfdLmZObp6hdIJ0WmapQa9PU8Z7OGIv24w%3D%3D"); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("care_reg_no","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*보호센터등록번호*/
-        urlBuilder.append("&" + URLEncoder.encode("care_nm","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*동물보호센터명*/
+        urlBuilder.append("&" + URLEncoder.encode("care_nm","UTF-8") + "=" + URLEncoder.encode(care_nm, "UTF-8")); /*동물보호센터명*/
         urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + (numOfRows)); /*한 페이지 결과 수 (1,000 이하)*/
         urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + (pageNo)); /*페이지 번호*/
         urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*xml(기본값) 또는 json*/
