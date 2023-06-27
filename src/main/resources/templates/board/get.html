@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Post</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/get.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+
+<!-- 로그인 하지 않은 상태 -->
+<div th:if="${session.user==null}" class="top_menu">
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+	
+<!-- 로그인 한 상태 -->
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+		<a href="/user/logout">로그아웃</a>|
+		<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+<div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+  </div>
+<div class="form-container">
+  <form id="modifyForm" action="/board/modify" method="post">
+    <div class="input_wrap">
+      <label for="bno" style="font-weight: bold;">No.</label>
+      <input id="bno" name="bno" class="form-control" readonly th:value="${pageInfo.bno}">
+    </div>
+    <div class="input_wrap">
+      <label for="writer" style="font-weight: bold;">Writer</label>
+      <input id="writer" name="writer" class="form-control" readonly th:value="${pageInfo.writer}">
+    </div>
+    <div class="input_wrap">
+      <label for="updatedate" style="font-weight: bold;">Register Date</label>
+      <input id="updatedate" name="updatedate" class="form-control" readonly th:value="${#dates.format(pageInfo.updatedate, 'yyyy/MM/dd')}">
+    </div>
+    <div class="input_wrap">
+      <label for="title" style="font-weight: bold;">Title</label>
+      <input id="title" name="title" class="form-control" readonly th:value="${pageInfo.title}">
+    </div> 
+    <div class="input_wrap">
+        <label for="photo" style="font-weight: bold;">Photo</label>
+        <img id="photo" class="form-control" th:if="${pageInfo.filepath != null}" th:src="@{${pageInfo.filepath}}" alt="이미지" style="max-width: 700px; width: auto;">
+        <p th:unless="${pageInfo.filepath != null}" style="font-weight: bold;">첨부파일 없음</p>
+    </div>
+    <div class="input_wrap" style="font-weight: bold;">
+      	<label for="content">Content</label>
+		<textarea id="content" name="content" class="form-control" rows="3" readonly th:text="${pageInfo.content}"></textarea>
+    </div>
+    <div class="btn_wrap">
+		<a class="btn" id="list_btn">목록</a> 
+		<a class="btn" id="modify_btn">수정</a>
+		<a class="btn" id="delete_btn">삭제</a>
+    </div>
+</form>   
+    
+<div class="input_wrap">
+    <h2>댓글</h2>
+ 	<ul class="replies"></ul>
+  <form id="commentForm" action="javascript:void(0)" method="post">
+    <div class="input_wrap">
+      <label for="commentContent" style="font-weight: bold;">댓글 작성</label>
+      <input class="inputbox" name="replier" style="font-weight: bold;" readonly th:value="${session.user.user_id}">
+      <div class="comment_input">
+        <textarea id="commentContent" name="reply" class="form-control" rows="3" placeholder="댓글을 남겨보세요."></textarea>
+        <button type="submit" class="re_btn">작성</button>
+      </div>
+     </div>
+  </form>
+</div>
+  <form id="infoForm" action="/board/modify" method="get">
+    <input type="hidden" id="bno" name="bno" th:value="${pageInfo.bno}">
+  </form>
+</div>
+</body>
+<script th:src="@{/js/jquery.js}"></script>
+<script src="/js/reply.js"></script>
+<script th:inline="javascript">
+
+	let form = $("#infoForm");
+	let writeUser = $("input[name='writer']").val();
+	let currentUser = /*[[${session.user.user_id}]]*/ '';
+	
+	
+	$("#list_btn").on("click", function(e){
+		form.find("#bno").remove();
+		form.attr("action", "/board/list");
+		form.submit();
+	});
+	
+	$("#modify_btn").on("click", function(e){
+		if(writeUser === currentUser){
+		form.attr("action", "/board/modify");
+		form.submit();
+		} else {
+			alert("작성자만 글 수정이 가능합니다.");
+		}
+	});
+	
+	$("#delete_btn").on("click", function(e){
+		if(writeUser === currentUser){
+			form.attr("action", "/board/delete");
+			form.attr("method", "post");
+			form.submit();	
+		} else {
+			alert("작성자만 글 삭제가 가능합니다.");	
+		}
+	});
+	
+	$(document).ready(function(){
+		console.log("JS Test");
+		
+		let bnoValue = /*[[${pageInfo.getBno()}]]*/ '';
+		console.log("bnoValue = " + bnoValue);
+		
+		let replyUL = $(".replies");
+		let pageNum = 1;
+		showList(pageNum);
+		
+		$(".re_btn").on("click", function(e){
+			e.preventDefault();
+			let replier = $("input[name='replier']").val();
+			let reply = $("textarea[name='reply']").val();
+			console.log("replier : " + replier);
+			console.log("reply : " + reply);
+			
+			if(replier == "" || reply == ""){
+				return;
+			}
+			
+			replyService.add({bno:bnoValue, reply:reply, replier: replier},
+				function(result){
+					alert(result);
+					$("input[name='replier']").val();
+					$("textarea[name='reply']").val("");
+					showList(pageNum);
+			}
+			
+		);
+	});
+	
+		$(".replies").on("click", "a.remove", function(e){
+			e.preventDefault();
+			let rnoValue = $(this).attr("href");
+			console.log("rnoValue : " + rnoValue);
+			
+			replyService.remove(rnoValue,
+				function(result){
+					alert(result);
+					showList(pageNum);
+				}
+			);
+		});
+		
+		
+		let check = false;
+		$(".replies").on("click", "a.modify", function(e){
+			e.preventDefault();
+	
+			let rnoValue = $(this).attr("href");
+			let replyTag = $("#reply" + rnoValue);
+			replyTag.html("<textarea style='width: 80%; resize: none; border-radius: 4px; width: 650px; border: 1px solid #ccc; padding: 5px;' class='" + rnoValue + "'>"
+				+ replyTag.text() + "</textarea>");
+			
+			$(this).hide();
+		
+			let finishes = $(".finish");
+			for(let i=0; i<finishes.length; i++){
+				if($(finishes[i]).attr("href") == rnoValue){
+					$(finishes[i]).show();
+					check = true;
+					break;
+				}
+			}
+		});
+		
+		
+		// 수정 완료
+		$(".replies").on("click", "a.finish", function(e){
+			e.preventDefault();
+			rnoValue = $(this).attr("href");
+			let newReply = $("." + rnoValue).val();
+			
+			if(newReply == "") {
+				return;
+			}
+			replyService.update({rno:rnoValue, replier:$("input[name='replier']").val(), reply:newReply},
+				function(result){
+					alert(result);
+					check = false;
+					showList(pageNum);
+				}	
+			);
+		});
+	
+	
+	function showList(page){
+		replyService.getList(
+				{bno:bnoValue, page:page || 1},
+				function(list){
+					let str ="";
+					if(list == null || list.length ==0){
+						replyUL.html("");
+						return;
+					}	
+					
+				console.log("There are some replies");
+				
+				for(let i=0, len=list.length; i<len; i++){
+					console.log(list[i].replier);
+					str += "<li style='display:block' data-rno='" + list[i].rno + "'>";
+					str += list[i].replier + "(" + list[i].replydate + ")";
+					str += "<p id='reply" + list[i].rno + "'>" + list[i].reply + "</p>";
+					
+				if(list[i].replier === $("input[name='replier']").val()){
+					str += "<div style='text-align: right;'>";
+					str += "<a class='modify' href='" + list[i].rno + "'>수정</a>";
+					str += "<a class='finish' href='" + list[i].rno + "' style='display:none;'>수정완료</a>";
+					str += "&nbsp;&nbsp";
+					str += "<a class='remove' href='" + list[i].rno + "'>삭제</a>";
+					str += "</div>";
+				}
+					str += "<div class='line'></div>";
+					str += "</li>";
+				}
+				
+				replyUL.html(str);
+			}
+		);
+	}
+});	
+</script>
+</html>
