@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+    <title>Modify</title>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/css/modify.css">
+</head>
+<body>
+<div class="logo">
+	<a th:href="@{/main}">
+  		<h1>Hi-look
+   			<span>Find love, Save lives.</span>
+ 		</h1>
+  	</a>
+</div>
+
+
+<!-- 로그인 하지 않은 상태 -->
+<div th:if="${session.user==null}" class="top_menu">
+	<a href="/user/login">로그인</a>| 
+	<a href="/user/join">회원가입</a>
+</div>
+
+<!-- 로그인 한 상태 -->
+<div th:if="${session.user!=null}" class="login_success">
+	<p>환영합니다! <span th:text="${session.user.user_id}" class="bold"></span> 님!</p>
+		<a href="/user/logout">로그아웃</a>|
+		<a href="/user/withdraw">회원탈퇴</a>
+</div>
+
+
+ <div class="back color-7">
+    <div class="row columns">
+      <h3>CATEGORY</h3>
+      <ul class="menu align-center expanded text-center SMN_effect-7">
+        <li><a href="/animal/list" data-hover="유기동물 조회">유기동물 조회</a></li>
+        <li><a href="/board/list" data-hover="커뮤니티">커뮤니티</a></li>
+        <li><a href="/shelter/list" data-hover="보호소 조회">보호소 조회</a></li>
+      </ul>
+    </div>
+</div>
+
+<body>
+<div class="container">
+  <form id="modifyForm" action="/board/modify" method="post" class="form-container" enctype="multipart/form-data">
+    <h1>게시글 수정</h1>
+    <div class="form-group">
+      <label for="bno" style="font-weight: bold;">No.</label>
+      <input id="bno" name="bno" readonly="readonly" th:value="${pageInfo.bno}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="writer" style="font-weight: bold;">Writer</label>
+      <input id="writer" name="writer" readonly="readonly" th:value="${pageInfo.writer}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="title" style="font-weight: bold;">Title</label>
+      <input id="title" name="title" th:value="${pageInfo.title}" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="content" style="font-weight: bold;">Content</label>
+      <textarea id="content" rows="3" name="content" style="resize:none;" th:text="${pageInfo.content}" class="form-control"></textarea>
+    </div>
+    <div class="field">
+   		<p>파일을 선택하세요.</p>
+   		<input type="file" name="file"><br> 
+	</div>
+    <div class="btn_wrap">
+      <button class="btn" id="list_btn">글 목록</button>
+      <button class="btn" id="modify_btn">수정 완료</button>
+      <button class="btn" id="cancel_btn">수정 취소</button>
+    </div>
+  </form>
+  <form id="infoForm" action="/board/modify" method="get">
+    <input type="hidden" id="bno" name="bno" th:value="${pageInfo.bno}">
+  </form>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script th:inline="javascript">
+
+	let form = $("#infoForm");
+	let mForm = $("#modifyForm");
+	
+	$("#list_btn").on("click", function(e){
+		form.find("#bno").remove();
+		form.attr("action", "/board/list");
+		form.submit();
+		e.preventDefault();
+	});
+	
+	$("#modify_btn").on("click", function(e){
+		mForm.submit();
+		
+	});
+	
+	$("#cancel_btn").on("click", function(e){
+		form.attr("action", "/board/get")
+		form.submit();
+		e.preventDefault();
+	});
+</script>
+</html>
