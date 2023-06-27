@@ -175,14 +175,14 @@ body {
 
 .slideshow-container {
   	max-width: 1200px;
-  	max-height: 750px;
+  	max-height: 700px;
   	position: relative;
   	margin: auto;
   	margin-top:20px;
 
 }
 .slideshow-container .mySlides img {
-  	height: 750px;
+  	height: 700px;
 }
 
 .mySlides {
