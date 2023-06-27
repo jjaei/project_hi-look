@@ -165,7 +165,7 @@ h3 {
 
 /* 상단 끝 */
 table {
-	margin-top: 70px;
+	margin-top: 30px;
 	text-align: center;
 }
 
@@ -176,4 +176,29 @@ table {
 .table th
 .table td {
     text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 20px;
+}
+ 
+.key_btn {
+	padding: 8px;
+	font-size:16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.key_btn:hover {
+    background-color: #0069d9;
 }
