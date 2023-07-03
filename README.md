@@ -6,7 +6,7 @@
 - 개발기간 : 2023. 05. 27 ~ 2023. 06. 25
 - [프로젝트 시연 연상](https://youtu.be/3NLBhApIbWE)
 - [블로그](https://jaeiva.tistory.com/180)
-- 사용기술(수정중)
+- 사용기술
   - FE : HTML, CSS, Javascript, Thymeleaf
   - BE : JAVA17, Spring, mariaDB, 
 
