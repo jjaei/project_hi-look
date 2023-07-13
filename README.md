@@ -8,7 +8,7 @@
 - [블로그](https://jaeiva.tistory.com/180)
 - 사용기술(수정중)
   - FE : HTML, CSS, Javascript, Thymeleaf
-  - BE : JAVA17, Spring, mariaDB, 
+  - BE : JAVA17, SpringBoot, mariaDB 
 
 <br>
 
