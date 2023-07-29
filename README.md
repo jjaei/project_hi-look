@@ -158,6 +158,8 @@
 <img width="400" alt="보호소조회2" src="https://github.com/jjaei/hi-look/assets/120344687/fa61269b-c50a-4390-aaec-1a8b5e8ab309">
 
 <br><br>
-## 7월 29일 추가
+
+## ☘️ 7월 29일 추가
 보호소 부분에 페이지 버튼을 추가했다. 기존에는 한 페이지에 모든 보호소가 보였다면 지금은 한 페이지에 10개의 보호소가 보이게 된다.
+<br>
 <img width="147" alt="스크린샷 2023-07-29 오후 11 54 21" src="https://github.com/jjaei/project_hi-look/assets/120344687/5948e39a-051c-4f37-b507-fe85c932bf3a">
