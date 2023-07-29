@@ -1,14 +1,6 @@
 package com.hilook.controllers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.hilook.beans.vo.ShelterVO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -18,7 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hilook.beans.vo.ShelterVO;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/shelter/*")
@@ -27,10 +26,10 @@ public class ShelterController {
     	@GetMapping("/list")
     	public ModelAndView list(Model model,
 			@RequestParam(value = "care_nm", defaultValue = "") String care_nm,
-			@RequestParam(defaultValue = "1") int pageNum) throws IOException {	
-    		
-		int pageNo = 1;
-        int numOfRows = 1000;
+			@RequestParam(defaultValue = "1") int pageNo) throws IOException {
+
+        int numOfRows = 10;
+        int offset = (pageNo - 1) * numOfRows;
 
     	StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1543061/animalShelterSrvc/shelterInfo"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=TqJb2EMvQ4ga3%2Flmz63uvvv3TTJmkEO9qKkfhmngKmCwQcuWYSb%2FkfdLmZObp6hdIJ0WmapQa9PU8Z7OGIv24w%3D%3D"); /*Service Key*/
@@ -95,6 +94,7 @@ public class ShelterController {
 //      ModelAndView 객체를 생성하고 뷰 이름과 모델을 설정
         ModelAndView modelAndView = new ModelAndView("shelter/list");
         modelAndView.addObject("items", itemNames);
+        modelAndView.addObject("pageNo", pageNo);
         
 //      ModelAndView 객체를 반환
         return modelAndView;

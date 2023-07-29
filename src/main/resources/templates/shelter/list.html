@@ -67,6 +67,11 @@
 		</tr>
     </tbody>
 </table>
+<div class="page">
+    <a class="page_button" th:href="@{|/shelter/list?pageNo=${pageNo - 1}|}" th:if="${pageNo > 1}">이전</a>
+    <span class="current_page" th:text="${pageNo}"></span>
+    <a class="page_button" th:href="@{|/shelter/list?pageNo=${pageNo + 1}|}">다음</a>
+</div>
 </body>
 <script th:src="@{/js/jquery.js}"></script>
 </html>
